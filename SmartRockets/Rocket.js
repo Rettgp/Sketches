@@ -10,10 +10,18 @@ export class Rocket {
         this.m_life = 0;
         this.m_complete = false;
         this.m_crash = false;
+        this.m_acceleration_offset = 1.0;
     }
 
     Accelerate(force) {
-        this.m_acceleration.add(force);
+        // console.log(this.m_acceleration_offset);
+        let mod_vector = createVector(force.x * this.m_acceleration_offset, force.y * this.m_acceleration_offset);
+        this.m_acceleration.add(mod_vector);
+    }
+
+    SetAccelerationOffset(accel_offset)
+    {
+        this.m_acceleration_offset = accel_offset;
     }
 
     Update() {
@@ -85,6 +93,10 @@ export class Rocket {
 
     get dna() {
         return this.m_dna;
+    }
+
+    get complete() {
+        return this.m_complete;
     }
 
     set complete(c) {

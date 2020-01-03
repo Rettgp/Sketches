@@ -1,14 +1,14 @@
 
 export class Dna {
     constructor(genes) {
-        this.m_lifespan = 400;
+        this.m_lifespan = 200;
         this.m_genes = [];
 
         if (!genes) {
             this.m_genes = [];
             for (let i = 0; i < this.m_lifespan; ++i) {
                 this.m_genes[i] = p5.Vector.random2D();
-                this.m_genes[i].setMag(0.2);
+                this.m_genes[i].setMag(1.5);
             }
         } else {
             this.m_genes = genes;
@@ -42,9 +42,9 @@ export class Dna {
 
     Mutate() {
         for (let i = 0; i < this.m_genes.length; ++i) {
-            if (random(1) < 0.01) {
+            if (random(1) < 0.001) {
                 this.m_genes[i] = p5.Vector.random2D();
-                this.m_genes[i].setMag(0.2);
+                this.m_genes[i].setMag(1.5);
             }
         }
     }

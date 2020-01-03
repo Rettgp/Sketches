@@ -6,7 +6,7 @@ export class Population {
         this.m_start_x = x;
         this.m_start_y = y;
         this.m_rockets = [];
-        this.m_size = 100;
+        this.m_size = 500;
         this.m_mating_pool = [];
 
         for (let i = 0; i < this.m_size; ++i) {
@@ -33,9 +33,10 @@ export class Population {
             rocket.pos.y < 0;
     }
 
-    Run(obstacles, boundary) {
+    Run(obstacles, boundary, accel_offset) {
         for (let i = 0; i < this.m_size; ++i) {
             let rocket = this.m_rockets[i];
+            rocket.SetAccelerationOffset(accel_offset);
             let target_dist = 
                 dist(rocket.pos.x, rocket.pos.y, this.m_target.x, this.m_target.y);
             if (this.IsCrashed(rocket, obstacles) ||
@@ -104,5 +105,16 @@ export class Population {
         }
 
         this.m_rockets = new_rockets;
+    }
+
+    SuccessPercentage() {
+        let num_complete = 0;
+        for (let i = 0; i < this.m_size; ++i) {
+            if (this.m_rockets[i].complete) {
+                num_complete++;
+            }
+        }
+
+        return num_complete / this.m_size;
     }
 }

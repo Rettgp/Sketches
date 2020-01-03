@@ -3,7 +3,7 @@ import {TemporaryParticle} from "./TemporaryParticle.js"
 
 export class Firework {
     constructor(x, y) {
-        this.m_rocket = new Particle(x, y, color(0,0,100,1), createVector(0, random(-10, -15)));
+        this.m_rocket = new Particle(x, y, color(0,0,100,1), createVector(random(-1, 1), random(-10, -20)));
         this.m_rocket_trail = [];
         this.m_explosion = [];
         this.m_explosion_lifespan = 120;
@@ -14,13 +14,15 @@ export class Firework {
             this.m_rocket.ApplyForce(gravity)
             this.m_rocket.Update();
 
-            let trail_particle = new TemporaryParticle(
-                this.m_rocket.pos.x, 
-                this.m_rocket.pos.y, 
-                color(60,100,100,1),
-                createVector(random(-1, 1), 
-                random(1, 3)), 10);
-            this.m_rocket_trail.push(trail_particle);
+            if ( this.m_rocket_trail.length < 10 ) {
+                let trail_particle = new TemporaryParticle(
+                    this.m_rocket.pos.x, 
+                    this.m_rocket.pos.y, 
+                    color(60,100,100,1),
+                    createVector(random(-0.5, 0.5), 
+                    random(1, 3)), 10);
+                this.m_rocket_trail.push(trail_particle);
+            }
 
             if ( this.m_rocket.velocity.y >= 0 ) {
                 this.Explode();
@@ -37,6 +39,8 @@ export class Firework {
             if (!myself.m_rocket) {
                 particle.velocity.mult(0.9);
             }
+
+            // particle.ApplyForce(p5.Vector.random2D()), 
             particle.ApplyForce(p5.Vector.mult(gravity, 0.5));
             particle.Update();
         });
@@ -70,7 +74,7 @@ export class Firework {
 
     Explode() {
         let hue = random(360);
-        let num_particles = random(100, 500);
+        let num_particles = random(100, 300);
         let explosiveness = random(5,25);
         for (let i = 0; i < num_particles; ++i) {
             let particle = new TemporaryParticle(

@@ -1,7 +1,7 @@
 import {Firework} from "./Firework.js"
 
-let WIDTH = 900;
-let HEIGHT = 700;
+let WIDTH = 1900;
+let HEIGHT = 1050;
 let GRAVITY;
 
 let fireworks = [];
@@ -21,12 +21,13 @@ function draw() {
 
     for (let i = fireworks.length - 1; i >= 0; --i) {
         let firework = fireworks[i];
-        firework.Update(GRAVITY);
-        firework.Draw();
-        
+
         if (firework.IsFinished()) {
             fireworks.splice(i, 1);
         }
+
+        firework.Update(GRAVITY);
+        firework.Draw();
     }
 
     if (random(1) > 0.90) {
